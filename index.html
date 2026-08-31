@@ -1,34 +1,94 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#000000">
-  <meta name="description" content="VÄRON — Issue 001, BEFORE EDEN. Coming September 2026.">
-  <title>VÄRON — Issue 001</title>
-  <style>
-    html, body {
-      margin: 0;
-      width: 100%;
-      height: 100%;
-      background: #000;
-      overflow: hidden;
-    }
-    body {
-      display: grid;
-      place-items: center;
-    }
-    .poster {
-      width: 100vw;
-      height: 100vh;
-      object-fit: contain;
-      display: block;
-    }
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VÄRON — A Visual Publication</title>
+<meta name="description" content="VÄRON — A Visual Publication">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Playfair+Display:wght@400;500&display=swap');
+:root{--bg:#050505;--fg:#f4f1eb;--muted:#99958e;--line:#242424}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--fg);font-family:"DM Sans",Arial,sans-serif}a{color:inherit;text-decoration:none}
+.nav{position:fixed;z-index:50;top:0;left:0;right:0;height:72px;padding:0 28px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(#050505,rgba(5,5,5,.78),transparent)}
+.brand{font-family:"Playfair Display",Georgia,serif;font-size:30px;letter-spacing:.05em}.links{display:flex;gap:27px;font-size:10px;letter-spacing:.17em;text-transform:uppercase}.links a:hover{opacity:.55}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:90px 0 35px;overflow:hidden}.hero-title{padding:0 28px 25px}.kicker{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:11px}.hero h1{font:400 clamp(76px,16vw,210px)/.76 "Playfair Display",Georgia,serif;letter-spacing:-.06em;margin:0}
+.marquee{display:flex;gap:8px;width:max-content;padding-left:8px;animation:slide 55s linear infinite}.marquee:hover{animation-play-state:paused}.marquee img{height:min(54vh,530px);width:auto;object-fit:cover;cursor:pointer}@keyframes slide{to{transform:translateX(-50%)}}
+.section{padding:110px 28px}.head{border-top:1px solid var(--line);padding-top:13px;margin-bottom:35px;display:flex;justify-content:space-between;align-items:baseline}.head h2{font:400 47px/1 "Playfair Display",Georgia,serif;margin:0}.head span{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+/* BOOKSHELF */
+.bookshelf-wrap{position:relative;padding:55px 25px 35px;background:linear-gradient(#0a0a0a,#060606);border:1px solid #171717;overflow:hidden}
+.bookshelf{display:flex;gap:65px;align-items:flex-end;overflow-x:auto;padding:0 20px 70px;scrollbar-width:thin;scrollbar-color:#444 transparent}
+.issue{flex:0 0 290px;cursor:pointer;transition:transform .45s}.issue:hover{transform:translateY(-13px)}
+.cover{position:relative;aspect-ratio:8.5/11;background:#111;box-shadow:0 22px 35px rgba(0,0,0,.5);overflow:hidden}.cover img{width:100%;height:100%;object-fit:cover;display:block}
+.cover-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#060606;color:#eee;padding:25px}.cover-label .v{font:400 34px "Playfair Display",Georgia,serif;letter-spacing:.04em}.cover-label .issue-no{font-size:9px;letter-spacing:.3em;margin-top:40px}.cover-label .coming{font:400 31px/1.02 "Playfair Display",Georgia,serif;margin-top:12px}.cover-label .date{font-size:8px;letter-spacing:.22em;color:#999;margin-top:18px;text-transform:uppercase}
+.shelf{position:absolute;left:0;right:0;bottom:32px;height:12px;background:#202020;border-top:1px solid #333;box-shadow:0 15px 20px rgba(0,0,0,.7)}
+.issue-info{display:flex;justify-content:space-between;padding-top:13px;font-size:9px;letter-spacing:.13em;text-transform:uppercase}.muted{color:var(--muted)}
+/* WORK */
+.work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.work-card{position:relative;aspect-ratio:4/5;overflow:hidden;cursor:pointer}.work-card img{width:100%;height:100%;object-fit:cover;transition:transform .7s}.work-card:hover img{transform:scale(1.035)}.work-card .label{position:absolute;left:14px;bottom:13px;font-size:9px;letter-spacing:.15em;text-transform:uppercase;text-shadow:0 1px 8px #000}
+/* STATEMENT */
+.statement{min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:50px}.statement p{max-width:900px;font:400 clamp(31px,5vw,64px)/1.06 "Playfair Display",Georgia,serif}
+/* SHOP/BOOK */
+.shop-items{display:flex;gap:35px;overflow:auto}.product{flex:0 0 290px}.product-img{aspect-ratio:8.5/11;background:#111;overflow:hidden}.product-img img{width:100%;height:100%;object-fit:cover}.product-meta{display:flex;justify-content:space-between;padding-top:12px;font-size:9px;letter-spacing:.14em;text-transform:uppercase}
+.book{display:grid;grid-template-columns:1fr 1fr;gap:75px}.book h3{font:400 57px/1.03 "Playfair Display",Georgia,serif;margin:0 0 18px}.book p{max-width:530px;color:#aaa59d;line-height:1.7}.form{display:grid;gap:13px}.form input,.form textarea{background:#090909;border:1px solid var(--line);color:#fff;padding:15px;border-radius:0;font:inherit}.form textarea{min-height:130px}.form button{background:#f4f1eb;color:#050505;border:0;padding:16px;letter-spacing:.13em;text-transform:uppercase;font-size:9px;cursor:pointer}
+.footer{padding:34px 28px 45px;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:#777;font-size:8px;letter-spacing:.15em;text-transform:uppercase}
+/* READER + COMING */
+.overlay{position:fixed;inset:0;z-index:100;background:#000;display:none;flex-direction:column}.overlay.open{display:flex}.topbar{height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;border-bottom:1px solid #191919}.topbar button{border:0;background:none;color:#fff;font-size:9px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer}.reader-body{position:relative;flex:1;display:flex;align-items:center;justify-content:center;padding:12px 65px}.reader-page{max-width:calc(100vw - 130px);max-height:calc(100vh - 105px);object-fit:contain}.arrow{position:absolute;top:50%;transform:translateY(-50%);width:50px;height:70px;border:0;background:rgba(0,0,0,.45);color:#fff;font-size:28px;cursor:pointer}.left{left:8px}.right{right:8px}.count{font-size:9px;color:#777;letter-spacing:.15em}
+.coming-page{position:fixed;inset:0;z-index:120;background:#050505;display:none;align-items:center;justify-content:center;text-align:center}.coming-page.open{display:flex}.coming-inner{max-width:650px;padding:30px}.coming-inner img{width:110px;height:110px;object-fit:cover;margin-bottom:35px}.coming-inner h2{font:400 clamp(55px,10vw,105px)/.85 "Playfair Display",Georgia,serif;margin:0;letter-spacing:-.04em}.coming-inner p{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:#999;margin-top:28px}.close{position:fixed;right:24px;top:18px;background:none;border:0;color:#fff;font-size:28px;cursor:pointer}
+.modal{position:fixed;inset:0;z-index:110;background:rgba(0,0,0,.97);display:none;align-items:center;justify-content:center}.modal.open{display:flex}.modal img{max-width:95vw;max-height:92vh;object-fit:contain}
+@media(max-width:800px){.nav{padding:0 16px}.brand{font-size:24px}.links{gap:13px;font-size:8px}.hero-title{padding:0 16px 18px}.marquee img{height:47vh}.section{padding:80px 16px}.head h2{font-size:36px}.bookshelf-wrap{padding-left:8px;padding-right:8px}.bookshelf{gap:32px;padding-left:10px;padding-right:10px}.issue{flex-basis:240px}.work-grid{grid-template-columns:repeat(2,1fr)}.book{grid-template-columns:1fr;gap:40px}.book h3{font-size:45px}.footer{padding:30px 16px;flex-direction:column;gap:15px}}
+</style>
 </head>
 <body>
-  <img class="poster"
-       src="page-2.png"
-       alt="VÄRON — Issue 001, ‘BEFORE EDEN’, coming September 2026">
-</body>
-</html>
+<nav class="nav"><a class="brand" href="#top">VÄRON</a><div class="links"><a href="#magazine">Magazine</a><a href="#work">Work</a><a href="#shop">Shop</a><a href="#book">Book</a></div></nav>
+
+<main id="top">
+<section class="hero"><div class="hero-title"><div class="kicker">A Visual Publication</div><h1>VÄRON</h1></div><div class="marquee" id="marquee"></div></section>
+
+<section class="section" id="magazine">
+<div class="head"><h2>Magazine</h2><span>Archive</span></div>
+<div class="bookshelf-wrap">
+<div class="bookshelf">
+<article class="issue" onclick="openReader()"><div class="cover"><img src="assets/pages/01.jpg" alt="VÄRON Issue 001 — Before Eden"></div><div class="issue-info"><span>Issue 001</span><span class="muted">Before Eden</span></div></article>
+<article class="issue" onclick="openComing()"><div class="cover"><div class="cover-label"><div class="v">VÄRON</div><div class="issue-no">ISSUE 002</div><div class="coming">COMING<br>DECEMBER<br>2026</div><div class="date">A Visual Publication</div></div></div><div class="issue-info"><span>Issue 002</span><span class="muted">Coming Soon</span></div></article>
+</div><div class="shelf"></div>
+</div>
+</section>
+
+<section class="statement"><p>Photography as a language to explore image, identity, fashion, and the space between what we create and what we become.</p></section>
+
+<section class="section" id="work"><div class="head"><h2>Work</h2><span>Issue 001 / Selected</span></div><div class="work-grid" id="workGrid"></div></section>
+
+<section class="section" id="shop"><div class="head"><h2>Shop</h2><span>Objects of VÄRON</span></div><div class="shop-items"><article class="product"><div class="product-img"><img src="assets/pages/01.jpg" alt="VÄRON Issue 001"></div><div class="product-meta"><span>Issue 001</span><span class="muted">Purchase</span></div></article><article class="product"><div class="product-img"><div class="cover-label" style="height:100%;display:flex;align-items:center;justify-content:center;background:#090909"><div class="coming" style="margin:0">POSTERS</div></div></div><div class="product-meta"><span>Posters</span><span class="muted">Coming Soon</span></div></article></div></section>
+
+<section class="section" id="book"><div class="head"><h2>Book</h2><span>Photography / Collaboration</span></div><div class="book"><div><h3>Make your moment official.</h3><p>Editorial, fashion, portrait, and creative photography. VÄRON is a platform for image-making—and everyone gets their own moment.</p></div><form class="form" id="bookingForm"><input name="name" placeholder="Name" required><input name="email" type="email" placeholder="Email" required><input name="type" placeholder="Shoot / collaboration type" required><input name="date" placeholder="Preferred date"><textarea name="brief" placeholder="Tell me about the idea"></textarea><button>Send booking inquiry</button></form></div></section>
+</main>
+<footer class="footer"><span>© 2026 VÄRON</span><span>A Visual Publication</span></footer>
+
+<div class="overlay" id="reader"><div class="topbar"><button onclick="closeReader()">Close</button><span class="count" id="count">01 / 32</span><button onclick="toggleFullscreen()">Fullscreen</button></div><div class="reader-body"><button class="arrow left" onclick="prevPage()">‹</button><img class="reader-page" id="readerPage" src="assets/pages/01.jpg"><button class="arrow right" onclick="nextPage()">›</button></div></div>
+<div class="coming-page" id="coming"><button class="close" onclick="closeComing()">×</button><div class="coming-inner"><img src="assets/varon-emblem.jpg" alt="VÄRON emblem"><h2>ISSUE 002</h2><p>Coming December 2026</p></div></div>
+<div class="modal" id="modal" onclick="closeModal()"><button class="close">×</button><img id="modalImg" src=""></div>
+
+<script src="assets/config.js"></script>
+<script>
+const pages=Array.from({length:32},(_,i)=>`assets/pages/${String(i+1).padStart(2,'0')}.jpg`);
+const editorialPages=[8,11,15,17,20,24,26,28,29];
+const names=["BEFORE EDEN","MODERN VINTAGE","OBSTRUCTION","ROSE","SUBCONSCIOUS P3","TRIAL BY FIRE","STRING THEORY","PARIS","BAG LADY COLLECTIVE"];
+let current=1;
+function buildMarquee(){let m=document.getElementById('marquee');let x=editorialPages.map((p,i)=>`<img src="${pages[p-1]}" alt="${names[i]}" onclick="openImage('${pages[p-1]}')">`).join('');m.innerHTML=x+x}
+function buildWork(){document.getElementById('workGrid').innerHTML=editorialPages.map((p,i)=>`<article class="work-card" onclick="openImage('${pages[p-1]}')"><img src="${pages[p-1]}" alt="${names[i]}"><div class="label">${names[i]}</div></article>`).join('')}
+function openReader(){current=1;updateReader();document.getElementById('reader').classList.add('open');document.body.style.overflow='hidden'}
+function closeReader(){document.getElementById('reader').classList.remove('open');document.body.style.overflow=''}
+function updateReader(){document.getElementById('readerPage').src=pages[current-1];document.getElementById('count').textContent=String(current).padStart(2,'0')+' / 32'}
+function nextPage(){current=current===32?1:current+1;updateReader()}function prevPage(){current=current===1?32:current-1;updateReader()}
+function openComing(){document.getElementById('coming').classList.add('open');document.body.style.overflow='hidden'}function closeComing(){document.getElementById('coming').classList.remove('open');document.body.style.overflow=''}
+function openImage(src){document.getElementById('modalImg').src=src;document.getElementById('modal').classList.add('open');document.body.style.overflow='hidden'}function closeModal(){document.getElementById('modal').classList.remove('open');document.body.style.overflow=''}
+function toggleFullscreen(){const e=document.getElementById('reader');if(!document.fullscreenElement)e.requestFullscreen?.();else document.exitFullscreen?.()}
+document.addEventListener('keydown',e=>{if(document.getElementById('reader').classList.contains('open')){if(e.key==='ArrowRight')nextPage();if(e.key==='ArrowLeft')prevPage();if(e.key==='Escape')closeReader()}if(document.getElementById('coming').classList.contains('open')&&e.key==='Escape')closeComing()});
+document.getElementById('bookingForm').addEventListener('submit',e=>{e.preventDefault();let c=window.VARON_CONFIG||{};if(!c.bookingEmail||c.bookingEmail.includes('REPLACE_')){alert('Add your booking email in assets/config.js first.');return}let d=new FormData(e.target);let subject=encodeURIComponent('VÄRON Booking Inquiry — '+d.get('name'));let body=encodeURIComponent(`Name: ${d.get('name')}
+Email: ${d.get('email')}
+Shoot type: ${d.get('type')}
+Preferred date: ${d.get('date')}
+
+Idea:
+${d.get('brief')}`);location.href=`mailto:${c.bookingEmail}?subject=${subject}&body=${body}`});
+buildMarquee();buildWork();
+</script>
+</body></html>

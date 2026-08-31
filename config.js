@@ -1,0 +1,3 @@
+window.VARON_CONFIG = {
+  bookingEmail: "REPLACE_WITH_YOUR_BOOKING_EMAIL"
+};
