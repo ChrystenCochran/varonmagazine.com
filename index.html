@@ -6,89 +6,144 @@
 <meta name="description" content="VÄRON — A Visual Publication">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Playfair+Display:wght@400;500&display=swap');
-:root{--bg:#050505;--fg:#f4f1eb;--muted:#99958e;--line:#242424}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--fg);font-family:"DM Sans",Arial,sans-serif}a{color:inherit;text-decoration:none}
-.nav{position:fixed;z-index:50;top:0;left:0;right:0;height:72px;padding:0 28px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(#050505,rgba(5,5,5,.78),transparent)}
-.brand{font-family:"Playfair Display",Georgia,serif;font-size:30px;letter-spacing:.05em}.links{display:flex;gap:27px;font-size:10px;letter-spacing:.17em;text-transform:uppercase}.links a:hover{opacity:.55}
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:90px 0 35px;overflow:hidden}.hero-title{padding:0 28px 25px}.kicker{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:11px}.hero h1{font:400 clamp(76px,16vw,210px)/.76 "Playfair Display",Georgia,serif;letter-spacing:-.06em;margin:0}
-.marquee{display:flex;gap:8px;width:max-content;padding-left:8px;animation:slide 55s linear infinite}.marquee:hover{animation-play-state:paused}.marquee img{height:min(54vh,530px);width:auto;object-fit:cover;cursor:pointer}@keyframes slide{to{transform:translateX(-50%)}}
-.section{padding:110px 28px}.head{border-top:1px solid var(--line);padding-top:13px;margin-bottom:35px;display:flex;justify-content:space-between;align-items:baseline}.head h2{font:400 47px/1 "Playfair Display",Georgia,serif;margin:0}.head span{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-/* BOOKSHELF */
-.bookshelf-wrap{position:relative;padding:55px 25px 35px;background:linear-gradient(#0a0a0a,#060606);border:1px solid #171717;overflow:hidden}
-.bookshelf{display:flex;gap:65px;align-items:flex-end;overflow-x:auto;padding:0 20px 70px;scrollbar-width:thin;scrollbar-color:#444 transparent}
-.issue{flex:0 0 290px;cursor:pointer;transition:transform .45s}.issue:hover{transform:translateY(-13px)}
-.cover{position:relative;aspect-ratio:8.5/11;background:#111;box-shadow:0 22px 35px rgba(0,0,0,.5);overflow:hidden}.cover img{width:100%;height:100%;object-fit:cover;display:block}
-.cover-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#060606;color:#eee;padding:25px}.cover-label .v{font:400 34px "Playfair Display",Georgia,serif;letter-spacing:.04em}.cover-label .issue-no{font-size:9px;letter-spacing:.3em;margin-top:40px}.cover-label .coming{font:400 31px/1.02 "Playfair Display",Georgia,serif;margin-top:12px}.cover-label .date{font-size:8px;letter-spacing:.22em;color:#999;margin-top:18px;text-transform:uppercase}
-.shelf{position:absolute;left:0;right:0;bottom:32px;height:12px;background:#202020;border-top:1px solid #333;box-shadow:0 15px 20px rgba(0,0,0,.7)}
-.issue-info{display:flex;justify-content:space-between;padding-top:13px;font-size:9px;letter-spacing:.13em;text-transform:uppercase}.muted{color:var(--muted)}
-/* WORK */
-.work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.work-card{position:relative;aspect-ratio:4/5;overflow:hidden;cursor:pointer}.work-card img{width:100%;height:100%;object-fit:cover;transition:transform .7s}.work-card:hover img{transform:scale(1.035)}.work-card .label{position:absolute;left:14px;bottom:13px;font-size:9px;letter-spacing:.15em;text-transform:uppercase;text-shadow:0 1px 8px #000}
-/* STATEMENT */
-.statement{min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:50px}.statement p{max-width:900px;font:400 clamp(31px,5vw,64px)/1.06 "Playfair Display",Georgia,serif}
-/* SHOP/BOOK */
-.shop-items{display:flex;gap:35px;overflow:auto}.product{flex:0 0 290px}.product-img{aspect-ratio:8.5/11;background:#111;overflow:hidden}.product-img img{width:100%;height:100%;object-fit:cover}.product-meta{display:flex;justify-content:space-between;padding-top:12px;font-size:9px;letter-spacing:.14em;text-transform:uppercase}
-.book{display:grid;grid-template-columns:1fr 1fr;gap:75px}.book h3{font:400 57px/1.03 "Playfair Display",Georgia,serif;margin:0 0 18px}.book p{max-width:530px;color:#aaa59d;line-height:1.7}.form{display:grid;gap:13px}.form input,.form textarea{background:#090909;border:1px solid var(--line);color:#fff;padding:15px;border-radius:0;font:inherit}.form textarea{min-height:130px}.form button{background:#f4f1eb;color:#050505;border:0;padding:16px;letter-spacing:.13em;text-transform:uppercase;font-size:9px;cursor:pointer}
-.footer{padding:34px 28px 45px;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:#777;font-size:8px;letter-spacing:.15em;text-transform:uppercase}
-/* READER + COMING */
-.overlay{position:fixed;inset:0;z-index:100;background:#000;display:none;flex-direction:column}.overlay.open{display:flex}.topbar{height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;border-bottom:1px solid #191919}.topbar button{border:0;background:none;color:#fff;font-size:9px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer}.reader-body{position:relative;flex:1;display:flex;align-items:center;justify-content:center;padding:12px 65px}.reader-page{max-width:calc(100vw - 130px);max-height:calc(100vh - 105px);object-fit:contain}.arrow{position:absolute;top:50%;transform:translateY(-50%);width:50px;height:70px;border:0;background:rgba(0,0,0,.45);color:#fff;font-size:28px;cursor:pointer}.left{left:8px}.right{right:8px}.count{font-size:9px;color:#777;letter-spacing:.15em}
-.coming-page{position:fixed;inset:0;z-index:120;background:#050505;display:none;align-items:center;justify-content:center;text-align:center}.coming-page.open{display:flex}.coming-inner{max-width:650px;padding:30px}.coming-inner img{width:110px;height:110px;object-fit:cover;margin-bottom:35px}.coming-inner h2{font:400 clamp(55px,10vw,105px)/.85 "Playfair Display",Georgia,serif;margin:0;letter-spacing:-.04em}.coming-inner p{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:#999;margin-top:28px}.close{position:fixed;right:24px;top:18px;background:none;border:0;color:#fff;font-size:28px;cursor:pointer}
-.modal{position:fixed;inset:0;z-index:110;background:rgba(0,0,0,.97);display:none;align-items:center;justify-content:center}.modal.open{display:flex}.modal img{max-width:95vw;max-height:92vh;object-fit:contain}
-@media(max-width:800px){.nav{padding:0 16px}.brand{font-size:24px}.links{gap:13px;font-size:8px}.hero-title{padding:0 16px 18px}.marquee img{height:47vh}.section{padding:80px 16px}.head h2{font-size:36px}.bookshelf-wrap{padding-left:8px;padding-right:8px}.bookshelf{gap:32px;padding-left:10px;padding-right:10px}.issue{flex-basis:240px}.work-grid{grid-template-columns:repeat(2,1fr)}.book{grid-template-columns:1fr;gap:40px}.book h3{font-size:45px}.footer{padding:30px 16px;flex-direction:column;gap:15px}}
+:root{--bg:#050505;--fg:#f4f1eb;--muted:#aaa59d;--line:rgba(244,241,235,.16)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--fg);font-family:"DM Sans",Arial,sans-serif}body.locked{overflow:hidden}button,input,textarea{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}
+/* ONE-PAGE HOME */
+.home{position:relative;min-height:100vh;overflow:hidden;background:#050505}.home-slideshow{position:absolute;inset:0;overflow:hidden;background:#050505}.home-slide{position:absolute;inset:0;opacity:0;transform:scale(1.04);transition:opacity 1.4s ease,transform 7s ease;pointer-events:none}.home-slide.active{opacity:1;transform:scale(1)}.home-slide img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.52)}.home-slide.logo img{object-fit:contain;padding:18vh 22vw;filter:brightness(.9)}.home-slide.cover img{object-position:center}.home-vignette{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.12) 30%,rgba(0,0,0,.18) 62%,rgba(0,0,0,.82) 100%);pointer-events:none}
+.nav{position:absolute;z-index:20;top:0;left:0;right:0;height:88px;padding:0 30px;display:flex;align-items:center;justify-content:space-between}.brand{font-family:"Playfair Display",Georgia,serif;font-size:30px;letter-spacing:.05em}.links{display:flex;gap:30px;font-size:10px;letter-spacing:.19em;text-transform:uppercase}.links button{border:0;background:none;color:inherit;padding:14px 0}.links button:hover{opacity:.55}
+.home-center{position:absolute;z-index:10;left:30px;right:30px;top:50%;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;text-align:center;pointer-events:none}.home-center .eyebrow{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:#ddd9d1;margin-bottom:18px}.home-center h1{font:400 clamp(72px,15vw,205px)/.78 "Playfair Display",Georgia,serif;letter-spacing:-.07em;margin:0}.home-center p{margin:25px 0 0;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:#d1cdc6}.home-bottom{position:absolute;z-index:10;left:30px;right:30px;bottom:28px;display:flex;justify-content:space-between;align-items:end;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#d0cbc4}.slide-index{display:flex;gap:9px;align-items:center}.slide-line{width:60px;height:1px;background:rgba(255,255,255,.35)}
+/* PANELS */
+.panel{position:fixed;inset:0;z-index:100;background:#000;display:none;flex-direction:column}.panel.open{display:flex}.panel-top{height:72px;flex:0 0 72px;border-bottom:1px solid #1b1b1b;display:flex;align-items:center;justify-content:space-between;padding:0 25px}.panel-top .title{font-size:9px;letter-spacing:.2em;text-transform:uppercase}.panel-top button{border:0;background:none;color:#fff;font-size:9px;letter-spacing:.17em;text-transform:uppercase;padding:12px}.panel-body{flex:1;min-height:0;overflow:auto}
+/* MAGAZINE READER */
+.reader-body{position:relative;height:100%;display:flex;align-items:center;justify-content:center;padding:15px 75px}.reader-page{max-width:calc(100vw - 150px);max-height:calc(100vh - 110px);width:auto;height:auto;object-fit:contain;user-select:none}.reader-arrow{position:absolute;top:50%;transform:translateY(-50%);width:58px;height:86px;border:0;background:rgba(255,255,255,.04);color:#fff;font-size:34px}.reader-arrow:hover{background:rgba(255,255,255,.1)}.reader-arrow.left{left:8px}.reader-arrow.right{right:8px}.reader-count{font-size:9px;color:#777;letter-spacing:.16em}
+/* BOOK */
+.book-panel{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 72px)}.book-copy{padding:8vw 6vw;border-right:1px solid #1b1b1b;display:flex;flex-direction:column;justify-content:center}.book-copy h2{font:400 clamp(55px,7vw,105px)/.88 "Playfair Display",Georgia,serif;margin:0 0 28px;letter-spacing:-.04em}.book-copy p{max-width:510px;color:#aaa59d;line-height:1.75;font-size:14px}.book-copy .small{margin-top:35px;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#777}.book-form-wrap{padding:8vw 6vw;display:flex;align-items:center}.form{width:100%;max-width:560px;display:grid;gap:12px}.form label{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#777;margin-top:8px}.form input,.form textarea{width:100%;background:#080808;border:1px solid #262626;color:#fff;padding:16px;border-radius:0;outline:none}.form input:focus,.form textarea:focus{border-color:#777}.form textarea{min-height:145px;resize:vertical}.form button{margin-top:8px;background:var(--fg);color:#050505;border:0;padding:17px;letter-spacing:.15em;text-transform:uppercase;font-size:9px}.form-note{font-size:8px;line-height:1.6;color:#666;margin-top:2px}
+/* SHOP */
+.shop-panel{padding:7vw 5vw}.shop-head{display:flex;justify-content:space-between;align-items:end;border-bottom:1px solid #1b1b1b;padding-bottom:15px}.shop-head h2{font:400 clamp(50px,7vw,100px)/.9 "Playfair Display",Georgia,serif;margin:0}.shop-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5vw;margin-top:6vw}.product{min-width:0}.product-img{aspect-ratio:8.5/11;background:#0a0a0a;overflow:hidden}.product-img img{width:100%;height:100%;object-fit:cover;display:block}.product-meta{display:flex;justify-content:space-between;padding-top:13px;font-size:9px;letter-spacing:.14em;text-transform:uppercase}.coming{display:flex;align-items:center;justify-content:center;height:100%;font:400 clamp(35px,5vw,75px)/.9 "Playfair Display",Georgia,serif;text-align:center;padding:30px}
+.close{border:0;background:none;color:#fff;font-size:26px;line-height:1}.success{display:none;margin-top:12px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#bbb}.success.show{display:block}
+@media(max-width:800px){.nav{height:70px;padding:0 16px}.brand{font-size:24px}.links{gap:12px;font-size:8px}.links button{padding:10px 0}.home-center{left:16px;right:16px}.home-center h1{font-size:clamp(70px,21vw,125px)}.home-slide.logo img{padding:24vh 15vw}.home-bottom{left:16px;right:16px;bottom:18px}.panel-top{height:62px;flex-basis:62px;padding:0 12px}.reader-body{padding:10px 50px}.reader-page{max-width:calc(100vw - 90px);max-height:calc(100vh - 95px)}.reader-arrow{width:42px;height:65px}.book-panel{display:block;min-height:auto}.book-copy{border-right:0;border-bottom:1px solid #1b1b1b;padding:15vh 20px 10vh}.book-form-wrap{padding:10vh 20px}.shop-panel{padding:14vh 20px 10vh}.shop-grid{grid-template-columns:1fr;gap:12vh}.form input,.form textarea{font-size:16px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.home-slide{transition:none}.home-slide.active{transform:none}}
 </style>
 </head>
 <body>
-<nav class="nav"><a class="brand" href="#top">VÄRON</a><div class="links"><a href="#magazine">Magazine</a><a href="#work">Work</a><a href="#shop">Shop</a><a href="#book">Book</a></div></nav>
+<main class="home" id="home">
+  <div class="home-slideshow" aria-hidden="true">
+    <div class="home-slide cover active"><img src="assets/varon-hero.jpg" alt=""></div>
+  </div>
+  <div class="home-vignette"></div>
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="#home">VÄRON</a>
+    <div class="links">
+      <button type="button" id="magazineBtn">Magazine</button>
+      <button type="button" id="shopBtn">Shop</button>
+      <button type="button" id="bookBtn">Book</button>
+    </div>
+  </nav>
+  <div class="home-center">
+    <div>
+      <div class="eyebrow">A Visual Publication</div>
+      <h1>VÄRON</h1>
+      <p>Visual Culture. Storytold.</p>
+    </div>
+  </div>
+  <div class="home-bottom"><span>Issue 001 — Before Eden</span><span class="slide-index"><span id="slideNumber">01</span><span class="slide-line"></span><span>01</span></span></div>
+</main>
 
-<main id="top">
-<section class="hero"><div class="hero-title"><div class="kicker">A Visual Publication</div><h1>VÄRON</h1></div><div class="marquee" id="marquee"></div></section>
-
-<section class="section" id="magazine">
-<div class="head"><h2>Magazine</h2><span>Archive</span></div>
-<div class="bookshelf-wrap">
-<div class="bookshelf">
-<article class="issue" onclick="openReader()"><div class="cover"><img src="assets/pages/01.jpg" alt="VÄRON Issue 001 — Before Eden"></div><div class="issue-info"><span>Issue 001</span><span class="muted">Before Eden</span></div></article>
-<article class="issue" onclick="openComing()"><div class="cover"><div class="cover-label"><div class="v">VÄRON</div><div class="issue-no">ISSUE 002</div><div class="coming">COMING<br>DECEMBER<br>2026</div><div class="date">A Visual Publication</div></div></div><div class="issue-info"><span>Issue 002</span><span class="muted">Coming Soon</span></div></article>
-</div><div class="shelf"></div>
-</div>
+<!-- MAGAZINE: interior pages are only available after clicking Magazine -->
+<section class="panel" id="magazinePanel" aria-hidden="true">
+  <div class="panel-top"><button type="button" class="close-panel">Close</button><span class="title">VÄRON — Issue 001 / Before Eden</span><span class="reader-count" id="readerCount">01 / 32</span></div>
+  <div class="reader-body">
+    <button type="button" class="reader-arrow left" id="prevPage" aria-label="Previous page">‹</button>
+    <img class="reader-page" id="readerPage" src="assets/pages/01.jpg" alt="VÄRON Issue 001 — page 01">
+    <button type="button" class="reader-arrow right" id="nextPage" aria-label="Next page">›</button>
+  </div>
 </section>
 
-<section class="statement"><p>Photography as a language to explore image, identity, fashion, and the space between what we create and what we become.</p></section>
+<!-- SHOP -->
+<section class="panel" id="shopPanel" aria-hidden="true">
+  <div class="panel-top"><button type="button" class="close-panel">Close</button><span class="title">VÄRON — Shop</span><span></span></div>
+  <div class="panel-body shop-panel">
+    <div class="shop-head"><h2>Shop</h2><span class="title">Objects of VÄRON</span></div>
+    <div class="shop-grid">
+      <article class="product"><div class="product-img"><img src="assets/pages/01.jpg" alt="VÄRON Issue 001 — Before Eden"></div><div class="product-meta"><span>Issue 001</span><span>Purchase</span></div></article>
+      <article class="product"><div class="product-img"><div class="coming">POSTERS<br><small style="font:500 8px/1.5 DM Sans,Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#777">Coming Soon</small></div></div><div class="product-meta"><span>Posters</span><span class="muted">Coming Soon</span></div></article>
+    </div>
+  </div>
+</section>
 
-<section class="section" id="work"><div class="head"><h2>Work</h2><span>Issue 001 / Selected</span></div><div class="work-grid" id="workGrid"></div></section>
-
-<section class="section" id="shop"><div class="head"><h2>Shop</h2><span>Objects of VÄRON</span></div><div class="shop-items"><article class="product"><div class="product-img"><img src="assets/pages/01.jpg" alt="VÄRON Issue 001"></div><div class="product-meta"><span>Issue 001</span><span class="muted">Purchase</span></div></article><article class="product"><div class="product-img"><div class="cover-label" style="height:100%;display:flex;align-items:center;justify-content:center;background:#090909"><div class="coming" style="margin:0">POSTERS</div></div></div><div class="product-meta"><span>Posters</span><span class="muted">Coming Soon</span></div></article></div></section>
-
-<section class="section" id="book"><div class="head"><h2>Book</h2><span>Photography / Collaboration</span></div><div class="book"><div><h3>Make your moment official.</h3><p>Editorial, fashion, portrait, and creative photography. VÄRON is a platform for image-making—and everyone gets their own moment.</p></div><form class="form" id="bookingForm"><input name="name" placeholder="Name" required><input name="email" type="email" placeholder="Email" required><input name="type" placeholder="Shoot / collaboration type" required><input name="date" placeholder="Preferred date"><textarea name="brief" placeholder="Tell me about the idea"></textarea><button>Send booking inquiry</button></form></div></section>
-</main>
-<footer class="footer"><span>© 2026 VÄRON</span><span>A Visual Publication</span></footer>
-
-<div class="overlay" id="reader"><div class="topbar"><button onclick="closeReader()">Close</button><span class="count" id="count">01 / 32</span><button onclick="toggleFullscreen()">Fullscreen</button></div><div class="reader-body"><button class="arrow left" onclick="prevPage()">‹</button><img class="reader-page" id="readerPage" src="assets/pages/01.jpg"><button class="arrow right" onclick="nextPage()">›</button></div></div>
-<div class="coming-page" id="coming"><button class="close" onclick="closeComing()">×</button><div class="coming-inner"><img src="assets/varon-emblem.jpg" alt="VÄRON emblem"><h2>ISSUE 002</h2><p>Coming December 2026</p></div></div>
-<div class="modal" id="modal" onclick="closeModal()"><button class="close">×</button><img id="modalImg" src=""></div>
+<!-- BOOK -->
+<section class="panel" id="bookPanel" aria-hidden="true">
+  <div class="panel-top"><button type="button" class="close-panel">Close</button><span class="title">VÄRON — Book</span><span></span></div>
+  <div class="panel-body book-panel">
+    <div class="book-copy">
+      <h2>Make your moment official.</h2>
+      <p>Editorial, fashion, portrait, and creative photography. VÄRON is a platform for image-making—and everyone gets their own moment.</p>
+      <div class="small">Photography / Collaboration / Creative Direction</div>
+    </div>
+    <div class="book-form-wrap">
+      <form class="form" id="bookingForm">
+        <label for="name">Name</label><input id="name" name="name" placeholder="Name" required>
+        <label for="email">Email</label><input id="email" name="email" type="email" placeholder="Email" required>
+        <label for="phone">Phone Number</label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Phone number" required>
+        <label for="type">Shoot / Collaboration Type</label><input id="type" name="type" placeholder="Shoot / collaboration type" required>
+        <label for="date">Preferred Date</label><input id="date" name="date" placeholder="Preferred date">
+        <label for="brief">Idea</label><textarea id="brief" name="brief" placeholder="Tell me about the idea"></textarea>
+        <button type="submit">Send booking inquiry</button>
+        <div class="form-note">Your inquiry will open your email client with the details pre-filled.</div>
+        <div class="success" id="formSuccess">Inquiry prepared — complete the email to send.</div>
+      </form>
+    </div>
+  </div>
+</section>
 
 <script src="assets/config.js"></script>
 <script>
-const pages=Array.from({length:32},(_,i)=>`assets/pages/${String(i+1).padStart(2,'0')}.jpg`);
-const editorialPages=[8,11,15,17,20,24,26,28,29];
-const names=["BEFORE EDEN","MODERN VINTAGE","OBSTRUCTION","ROSE","SUBCONSCIOUS P3","TRIAL BY FIRE","STRING THEORY","PARIS","BAG LADY COLLECTIVE"];
-let current=1;
-function buildMarquee(){let m=document.getElementById('marquee');let x=editorialPages.map((p,i)=>`<img src="${pages[p-1]}" alt="${names[i]}" onclick="openImage('${pages[p-1]}')">`).join('');m.innerHTML=x+x}
-function buildWork(){document.getElementById('workGrid').innerHTML=editorialPages.map((p,i)=>`<article class="work-card" onclick="openImage('${pages[p-1]}')"><img src="${pages[p-1]}" alt="${names[i]}"><div class="label">${names[i]}</div></article>`).join('')}
-function openReader(){current=1;updateReader();document.getElementById('reader').classList.add('open');document.body.style.overflow='hidden'}
-function closeReader(){document.getElementById('reader').classList.remove('open');document.body.style.overflow=''}
-function updateReader(){document.getElementById('readerPage').src=pages[current-1];document.getElementById('count').textContent=String(current).padStart(2,'0')+' / 32'}
-function nextPage(){current=current===32?1:current+1;updateReader()}function prevPage(){current=current===1?32:current-1;updateReader()}
-function openComing(){document.getElementById('coming').classList.add('open');document.body.style.overflow='hidden'}function closeComing(){document.getElementById('coming').classList.remove('open');document.body.style.overflow=''}
-function openImage(src){document.getElementById('modalImg').src=src;document.getElementById('modal').classList.add('open');document.body.style.overflow='hidden'}function closeModal(){document.getElementById('modal').classList.remove('open');document.body.style.overflow=''}
-function toggleFullscreen(){const e=document.getElementById('reader');if(!document.fullscreenElement)e.requestFullscreen?.();else document.exitFullscreen?.()}
-document.addEventListener('keydown',e=>{if(document.getElementById('reader').classList.contains('open')){if(e.key==='ArrowRight')nextPage();if(e.key==='ArrowLeft')prevPage();if(e.key==='Escape')closeReader()}if(document.getElementById('coming').classList.contains('open')&&e.key==='Escape')closeComing()});
-document.getElementById('bookingForm').addEventListener('submit',e=>{e.preventDefault();let c=window.VARON_CONFIG||{};if(!c.bookingEmail||c.bookingEmail.includes('REPLACE_')){alert('Add your booking email in assets/config.js first.');return}let d=new FormData(e.target);let subject=encodeURIComponent('VÄRON Booking Inquiry — '+d.get('name'));let body=encodeURIComponent(`Name: ${d.get('name')}
-Email: ${d.get('email')}
-Shoot type: ${d.get('type')}
-Preferred date: ${d.get('date')}
+(function(){
+  const panels={magazine:document.getElementById('magazinePanel'),shop:document.getElementById('shopPanel'),book:document.getElementById('bookPanel')};
+  const body=document.body;
+  const slides=[...document.querySelectorAll('.home-slide')];
+  const slideNumber=document.getElementById('slideNumber');
+  let slide=0, current=1;
+  const pages=Array.from({length:32},(_,i)=>`assets/pages/${String(i+1).padStart(2,'0')}.jpg`);
 
-Idea:
-${d.get('brief')}`);location.href=`mailto:${c.bookingEmail}?subject=${subject}&body=${body}`});
-buildMarquee();buildWork();
+  function setPanel(panel){
+    Object.values(panels).forEach(p=>{p.classList.remove('open');p.setAttribute('aria-hidden','true')});
+    if(panel){panel.classList.add('open');panel.setAttribute('aria-hidden','false');body.classList.add('locked');}
+    else body.classList.remove('locked');
+  }
+  function openMagazine(){current=1;updateReader();setPanel(panels.magazine)}
+  function updateReader(){document.getElementById('readerPage').src=pages[current-1];document.getElementById('readerPage').alt=`VÄRON Issue 001 — page ${String(current).padStart(2,'0')}`;document.getElementById('readerCount').textContent=`${String(current).padStart(2,'0')} / 32`}
+  function next(){current=current===32?1:current+1;updateReader()}
+  function prev(){current=current===1?32:current-1;updateReader()}
+  function advanceSlide(){slide=(slide+1)%slides.length;slides.forEach((s,i)=>s.classList.toggle('active',i===slide));slideNumber.textContent=String(slide+1).padStart(2,'0')}
+
+  document.getElementById('magazineBtn').addEventListener('click',openMagazine);
+  document.getElementById('shopBtn').addEventListener('click',()=>setPanel(panels.shop));
+  document.getElementById('bookBtn').addEventListener('click',()=>setPanel(panels.book));
+  document.getElementById('prevPage').addEventListener('click',prev);
+  document.getElementById('nextPage').addEventListener('click',next);
+  document.querySelectorAll('.close-panel').forEach(b=>b.addEventListener('click',()=>setPanel(null)));
+
+  document.addEventListener('keydown',e=>{
+    if(!panels.magazine.classList.contains('open')){if(e.key==='Escape')setPanel(null);return}
+    if(e.key==='ArrowRight')next();
+    if(e.key==='ArrowLeft')prev();
+    if(e.key==='Escape')setPanel(null);
+  });
+
+  document.getElementById('bookingForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const c=window.VARON_CONFIG||{};
+    if(!c.bookingEmail||c.bookingEmail.includes('REPLACE_')){alert('Add your booking email in assets/config.js first.');return}
+    const d=new FormData(e.target);
+    const subject=encodeURIComponent('VÄRON Booking Inquiry — '+d.get('name'));
+    const bodyText=`Name: ${d.get('name')}\nEmail: ${d.get('email')}\nPhone: ${d.get('phone')}\nShoot type: ${d.get('type')}\nPreferred date: ${d.get('date')}\n\nIdea:\n${d.get('brief')}`;
+    location.href=`mailto:${c.bookingEmail}?subject=${subject}&body=${encodeURIComponent(bodyText)}`;
+    document.getElementById('formSuccess').classList.add('show');
+  });
+
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches===false){setInterval(advanceSlide,6500)}
+})();
 </script>
-</body></html>
+</body>
+</html>
