@@ -9,7 +9,7 @@
 :root{--bg:#050505;--fg:#f4f1eb;--muted:#aaa59d;--line:rgba(244,241,235,.16)}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--fg);font-family:"DM Sans",Arial,sans-serif}body.locked{overflow:hidden}button,input,textarea{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}
 /* ONE-PAGE HOME */
-.home{position:relative;min-height:100vh;height:100vh;overflow:hidden;background:#050505}.home-slideshow{position:absolute;inset:0;background:#050505}.home-carousel{position:absolute;inset:0;overflow:hidden;background:#050505}.home-slide{position:absolute;inset:0;opacity:0;transform:scale(1.025);transition:opacity 1.2s ease,transform 7s ease;pointer-events:none;display:flex;align-items:center;justify-content:center}.home-slide.active{opacity:1;transform:scale(1)}.home-slide img{width:100%;height:100%;object-fit:cover;display:block;filter:none}.home-vignette{position:absolute;z-index:5;inset:0;background:radial-gradient(circle at center,rgba(0,0,0,.08) 0%,rgba(0,0,0,.24) 62%,rgba(0,0,0,.58) 100%);pointer-events:none}.home-hero{position:absolute;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;overflow:hidden;pointer-events:none}.home-hero img{width:min(78vw,1100px);height:min(88vh,1500px);object-fit:contain;display:block}
+.home{position:relative;min-height:100vh;height:100vh;overflow:hidden;background:#050505}.home-slideshow{position:absolute;inset:0;background:#050505}.home-carousel{position:absolute;inset:0;overflow:hidden;background:#050505}.home-slide{position:absolute;inset:0;opacity:0;transform:translateX(8%) scale(1.02);transition:opacity 1.6s ease,transform 2.2s cubic-bezier(.22,.61,.36,1);pointer-events:none;display:flex;align-items:center;justify-content:center;will-change:transform,opacity}.home-slide:nth-child(even){transform:translateX(-8%) scale(1.02)}.home-slide.active{opacity:1;transform:translateX(0) scale(1.02);z-index:2}.home-slide img{width:110%;height:100%;object-fit:cover;display:block;filter:none;transform:translateX(2%);transition:transform 6.5s cubic-bezier(.22,.61,.36,1)}.home-slide.active img{transform:translateX(-2%)}.home-vignette{position:absolute;z-index:5;inset:0;background:radial-gradient(circle at center,rgba(0,0,0,.08) 0%,rgba(0,0,0,.24) 62%,rgba(0,0,0,.58) 100%);pointer-events:none}.home-hero{position:absolute;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;overflow:hidden;pointer-events:none}.home-hero img{width:min(78vw,1100px);height:min(88vh,1500px);object-fit:contain;display:block}
 .nav{position:absolute;z-index:20;top:0;left:0;right:0;height:88px;padding:0 30px;display:flex;align-items:center;justify-content:space-between}.brand{font-family:"Playfair Display",Georgia,serif;font-size:30px;letter-spacing:.05em}.links{display:flex;gap:30px;font-size:10px;letter-spacing:.19em;text-transform:uppercase}.links button{border:0;background:none;color:inherit;padding:14px 0}.links button:hover{opacity:.55}
 .home-bottom{position:absolute;z-index:30;left:30px;right:30px;bottom:28px;display:flex;justify-content:space-between;align-items:end;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#d0cbc4}.slide-index{display:flex;gap:9px;align-items:center}.slide-line{width:60px;height:1px;background:rgba(255,255,255,.35)}
 /* PANELS */
@@ -29,8 +29,6 @@
     <div class="home-carousel">
       <div class="home-slide active"><img src="assets/carousel/slide01.png" alt="VÄRON editorial photograph 01"></div>
       <div class="home-slide"><img src="assets/carousel/slide02.png" alt="VÄRON editorial photograph 02"></div>
-      <div class="home-slide"><img src="assets/carousel/slide03.png" alt="VÄRON editorial photograph 03"></div>
-      <div class="home-slide"><img src="assets/carousel/slide04.jpg" alt="VÄRON editorial photograph 04"></div>
       <div class="home-slide"><img src="assets/carousel/slide05.jpg" alt="VÄRON editorial photograph 05"></div>
       <div class="home-slide"><img src="assets/carousel/slide06.jpg" alt="VÄRON editorial photograph 06"></div>
       <div class="home-slide"><img src="assets/carousel/slide07.jpg" alt="VÄRON editorial photograph 07"></div>
@@ -49,7 +47,7 @@
       <button type="button" id="bookBtn">Book</button>
     </div>
   </nav>
-  <div class="home-bottom"><span>Issue 001 — Before Eden</span><span class="slide-index"><span id="slideNumber">01</span><span class="slide-line"></span><span>01</span></span></div>
+  <div class="home-bottom"><span>Issue 001 — Before Eden</span><span class="slide-index"><span id="slideNumber">01</span><span class="slide-line"></span><span>09</span></span></div>
 </main>
 
 <!-- MAGAZINE -->
