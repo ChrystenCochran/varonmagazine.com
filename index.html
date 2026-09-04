@@ -19,8 +19,18 @@
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--fg);font-family:"DM Sans",Arial,sans-serif}body.locked{overflow:hidden}button,input,textarea{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}
 /* ONE-PAGE HOME */
 .home{position:relative;min-height:100vh;height:100vh;overflow:hidden;background:#050505}.home-slideshow{position:absolute;inset:0;background:#050505}.home-carousel{position:absolute;inset:0;overflow:hidden;background:#050505}.home-slide{position:absolute;inset:0;opacity:0;transform:translateX(110%) scale(1.035);pointer-events:none;display:flex;align-items:center;justify-content:center;will-change:transform,opacity;z-index:1}.home-slide.active{opacity:1;transform:translateX(0) scale(1.035);z-index:2;transition:transform .58s cubic-bezier(.77,0,.18,1),opacity .12s linear}.home-slide.leaving-left{opacity:1;transform:translateX(-110%) scale(1.035);z-index:3;transition:transform .58s cubic-bezier(.77,0,.18,1)}.home-slide.leaving-right{opacity:1;transform:translateX(110%) scale(1.035);z-index:3;transition:transform .58s cubic-bezier(.77,0,.18,1)}.home-slide.enter-from-left{opacity:1;transform:translateX(-110%) scale(1.035);z-index:2}.home-slide.enter-from-right{opacity:1;transform:translateX(110%) scale(1.035);z-index:2}.home-slide img{width:100%;height:100%;object-fit:contain;display:block;filter:none;transform:translateX(0);transition:transform .58s cubic-bezier(.77,0,.18,1)}.home-slide.active img{transform:translateX(0)}.home-carousel::after{content:"";position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:10}.home-carousel.flash::after{animation:carouselFlash .16s steps(2,end)}@keyframes carouselFlash{0%{opacity:0}35%{opacity:.95}65%{opacity:.35}100%{opacity:0}}
-.nav{position:absolute;z-index:20;top:0;left:0;right:0;height:88px;padding:0 30px;display:flex;align-items:center;justify-content:space-between}.brand{font-family:"Playfair Display",Georgia,serif;font-size:39px;letter-spacing:.05em}.links{display:flex;gap:34px;font-size:13px;letter-spacing:.19em;text-transform:uppercase}.links button{border:0;background:none;color:inherit;padding:14px 0}.links button:hover{opacity:.55}
+.nav{position:absolute;z-index:20;top:0;left:0;right:0;height:88px;padding:0 30px;display:flex;align-items:center;justify-content:space-between}.brand{font-family:"Playfair Display",Georgia,serif;font-size:46px;letter-spacing:.07em}.links{display:flex;gap:38px;font-size:15px;letter-spacing:.19em;text-transform:uppercase}.links button{border:0;background:none;color:inherit;padding:14px 0}.links button:hover{opacity:.55}
 .home-bottom{position:absolute;z-index:30;left:30px;right:30px;bottom:28px;display:flex;justify-content:space-between;align-items:end;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#d0cbc4}.slide-index{display:flex;gap:9px;align-items:center}.slide-line{width:60px;height:1px;background:rgba(255,255,255,.35)}
+/* DESKTOP HERO OVERLAY: fixed dead-center over the moving photography */
+.home-hero{position:absolute;inset:0;z-index:15;display:flex;align-items:center;justify-content:center;pointer-events:none}.home-hero img{display:block;width:min(68vw,980px);height:min(90vh,980px);object-fit:contain}.home-hero .mobile-overlay{display:none}
+/* Give desktop the full editorial field without changing the mobile treatment */
+@media(min-width:801px){
+.book-copy h2{line-height:1.08}
+.home-slide::before{content:"";position:absolute;inset:-7%;background-image:var(--slide-bg);background-size:cover;background-position:center;filter:blur(22px) brightness(.34) saturate(.75);transform:scale(1.08);opacity:.72;z-index:-1}
+.home-slide img{height:100%;width:auto;max-width:100%;object-fit:contain;position:relative;z-index:1}
+.home-carousel{z-index:1}.home-hero{z-index:15}.nav{z-index:20}.home-bottom{z-index:20}
+}
+
 /* PANELS */
 .panel{position:fixed;inset:0;z-index:100;background:#000;display:none;flex-direction:column}.panel.open{display:flex}.panel-top{height:72px;flex:0 0 72px;border-bottom:1px solid #1b1b1b;display:flex;align-items:center;justify-content:space-between;padding:0 25px}.panel-top .title{font-size:9px;letter-spacing:.2em;text-transform:uppercase}.panel-top button{border:0;background:none;color:#fff;font-size:9px;letter-spacing:.17em;text-transform:uppercase;padding:12px}.panel-body{flex:1;min-height:0;overflow:auto}
 /* BOOK */
@@ -28,7 +38,7 @@
 /* SHOP */
 .shop-panel{padding:7vw 5vw}.shop-head{display:flex;justify-content:space-between;align-items:end;border-bottom:1px solid #1b1b1b;padding-bottom:15px}.shop-head h2{font:400 clamp(50px,7vw,100px)/.9 "Playfair Display",Georgia,serif;margin:0}.shop-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5vw;margin-top:6vw}.product{min-width:0}.product-img{aspect-ratio:8.5/11;background:#0a0a0a;overflow:hidden}.product-img img{width:100%;height:100%;object-fit:cover;display:block}.product-meta{display:flex;justify-content:space-between;padding-top:13px;font-size:9px;letter-spacing:.14em;text-transform:uppercase}.coming{display:flex;align-items:center;justify-content:center;height:100%;font:400 clamp(35px,5vw,75px)/.9 "Playfair Display",Georgia,serif;text-align:center;padding:30px}
 .close{border:0;background:none;color:#fff;font-size:26px;line-height:1}.success{display:none;margin-top:12px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#bbb}.success.show{display:block}
-@media(max-width:800px){.home{height:100svh}.home-slideshow{inset:0}.home-carousel{position:absolute;inset:0;width:100%;z-index:1;border-left:0;background:#050505}.home-carousel .home-slide img{object-fit:cover}.home-hero{position:absolute;inset:0;z-index:10}.home-hero img{width:96vw;height:92svh;object-fit:contain}.nav{height:70px;padding:0 16px}.brand{font-size:31px}.links{gap:16px;font-size:10px}.links button{padding:10px 0}.home-bottom{left:16px;right:16px;bottom:18px}.panel-top{height:62px;flex-basis:62px;padding:0 12px}.book-panel{display:block;min-height:auto}.book-copy{border-right:0;border-bottom:1px solid #1b1b1b;padding:15vh 20px 10vh}.book-form-wrap{padding:10vh 20px}.shop-panel{padding:14vh 20px 10vh}.shop-grid{grid-template-columns:1fr;gap:12vh}.form input,.form textarea{font-size:16px}}
+@media(max-width:800px){.home{height:100svh}.home-slideshow{inset:0}.home-carousel{position:absolute;inset:0;width:100%;z-index:1;border-left:0;background:#050505}.home-carousel .home-slide img{object-fit:cover}.home-hero{position:absolute;inset:0;z-index:10}.home-hero .desktop-overlay{display:none}.home-hero .mobile-overlay{display:block;width:96vw;height:92svh;object-fit:contain}.nav{height:70px;padding:0 16px}.brand{font-size:31px}.links{gap:16px;font-size:10px}.links button{padding:10px 0}.home-bottom{left:16px;right:16px;bottom:18px}.panel-top{height:62px;flex-basis:62px;padding:0 12px}.book-panel{display:block;min-height:auto}.book-copy{border-right:0;border-bottom:1px solid #1b1b1b;padding:15vh 20px 10vh}.book-form-wrap{padding:10vh 20px}.shop-panel{padding:14vh 20px 10vh}.shop-grid{grid-template-columns:1fr;gap:12vh}.form input,.form textarea{font-size:16px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.home-slide{transition:none}.home-slide.active{transform:none}}
 </style>
 </head>
@@ -46,9 +56,8 @@
       <div class="home-slide"><img src="assets/carousel/slide08.png" alt="VÄRON editorial photograph 08"></div>
       <div class="home-slide"><img src="assets/carousel/slide09.jpg" alt="VÄRON editorial photograph 09"></div>
     </div>
-    </div>    </div>
   </div>
-  <div class="home-hero"><img src="assets/varon-wording-overlay.png" alt="VÄRON — A Visual Publication — Visual Culture. Storytold."></div>
+  <div class="home-hero"><img class="desktop-overlay" src="assets/varon-wording-overlay-transparent.png" alt="VÄRON — A Visual Publication — Visual Culture. Storytold."><img class="mobile-overlay" src="assets/varon-wording-overlay.png" alt=""></div>
   <nav class="nav" aria-label="Primary">
     <a class="brand" href="#home">VÄRON</a>
     <div class="links">
@@ -129,6 +138,7 @@
   });
 
   const slides=[...document.querySelectorAll('.home-carousel .home-slide')];
+  slides.forEach(slide=>{const img=slide.querySelector('img'); if(img) slide.style.setProperty('--slide-bg', `url(\"${img.getAttribute('src')}\")`);});
   let slideIndex=0;
   const slideNumber=document.getElementById('slideNumber');
   function advanceSlide(){
