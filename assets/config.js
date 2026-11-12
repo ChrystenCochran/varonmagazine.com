@@ -1,4 +1,4 @@
 window.VARON_CONFIG = {
   bookingEmail: "cc@varonmagazine.com",
-  applicationEndpoint: "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE"
+  applicationEndpoint: "https://script.google.com/macros/s/AKfycbyIqUSC3BhcopZEKSJju2IkSl4RMc_7A7WtCf4BMcjZQmqizHZx8cXvXh8aLJosz7o4/exec"
 };
