@@ -1,0 +1,7 @@
+VÄRON temporary email handoff update
+
+Changes: Model Portfolio / Website URL is now optional. Both model and creative forms prepare an email addressed to cc@varonmagazine.com using the applicant's email app.
+
+IMPORTANT LIMITATION: This is a temporary mailto handoff, not an automated web submission backend. Applicants must review and SEND the email themselves. Selected image files cannot be attached automatically by a website; the email draft lists selected filenames and asks the applicant to attach them manually. If the applicant has no configured email app, the handoff may not work. No application is stored by the website.
+
+For a true automated form with image uploads and delivery, deploy a server-side email endpoint (for example, a Cloudflare Worker or equivalent) with credentials configured securely. GitHub Pages alone cannot send email or store uploaded files.
