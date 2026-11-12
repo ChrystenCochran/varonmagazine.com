@@ -129,8 +129,8 @@
       <form class="join-form" id="creativeForm">
         <div><label for="creativeName">Full name *</label><input id="creativeName" name="name" autocomplete="name" required></div><div><label for="creativeEmail">Email *</label><input id="creativeEmail" name="email" type="email" autocomplete="email" required></div>
         <div><label for="creativeLocation">City / State *</label><input id="creativeLocation" name="location" autocomplete="address-level2" required></div><div><label for="creativeRole">Profession / Specialty *</label><select id="creativeRole" name="profession" required><option value="">Select specialty</option><option>Photographer</option><option>Videographer</option><option>Makeup Artist</option><option>Fashion Designer</option><option>Stylist</option><option>Hairdresser</option><option>Creative Director</option><option>Set Designer</option><option>Other Creative</option></select></div>
-        <div><label for="creativeSocial">Instagram / Social</label><input id="creativeSocial" name="social" placeholder="@yourhandle or link"></div><div><label for="creativePortfolio">Portfolio / Website</label><input id="creativePortfolio" name="portfolio" type="url" placeholder="https://"></div>
-        <div class="wide"><label for="creativeIntro">Short introduction *</label><textarea id="creativeIntro" name="introduction" required></textarea></div><div class="wide"><label for="creativeContribution">What would you like to contribute to VÄRON? *</label><textarea id="creativeContribution" name="contribution" required></textarea></div>
+        <div><label for="creativeSocial">Instagram / Social</label><input id="creativeSocial" name="social" placeholder="@yourhandle or link"></div><div><label for="creativePortfolio">Portfolio / Website link (optional)</label><input id="creativePortfolio" name="portfolio" type="url" placeholder="https://"></div>
+        <div class="wide"><label for="creativeImages">Portfolio images (optional, up to 5 MB each)</label><input id="creativeImages" name="portfolio_images" type="file" accept="image/jpeg,image/png,image/webp" multiple></div><div class="wide"><label for="creativeIntro">Short introduction *</label><textarea id="creativeIntro" name="introduction" required></textarea></div><div class="wide"><label for="creativeContribution">What would you like to contribute to VÄRON? *</label><textarea id="creativeContribution" name="contribution" required></textarea></div>
         <button type="submit">Submit Creative Application</button><div class="join-status" id="creativeStatus" aria-live="polite"></div>
       </form><div class="join-note">Applications are reviewed by VÄRON. A submission does not establish a working relationship or guarantee paid work. When you submit, your email app will open with your application addressed to VÄRON. Review and send the email to complete your application. If you selected portfolio images, attach them to the email before sending.</div>
     </div>
@@ -187,28 +187,43 @@
     el.addEventListener('click',openForm);
     el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openForm();}});
   });
-  function sendApplicationByEmail(e,statusId,subject){
+  const applicationEndpoint=(window.VARON_CONFIG||{}).applicationEndpoint||'';
+  const applicationFrame=document.createElement('iframe');
+  applicationFrame.name='varonApplicationResponse';
+  applicationFrame.style.display='none';
+  applicationFrame.title='Application submission response';
+  document.body.appendChild(applicationFrame);
+  function submitApplication(e,statusId,subject){
     e.preventDefault();
-    const form=e.currentTarget;
+    const form=e.currentTarget, status=document.getElementById(statusId), button=form.querySelector('button[type="submit"]');
     if(!form.reportValidity()) return;
-    const lines=[`VÄRON — ${subject} application`,''];
-    for(const field of form.elements){
-      if(!field.name || field.type==='submit' || field.type==='button' || field.type==='file') continue;
-      const value=(field.value||'').trim();
-      if(value) lines.push(`${field.name.replace(/_/g,' ')}: ${value}`);
+    if(!applicationEndpoint || applicationEndpoint.includes('PASTE_YOUR')){
+      status.textContent='Applications are temporarily unavailable. Please try again shortly.';
+      return;
     }
-    const files=form.querySelector('input[type="file"]');
-    if(files && files.files.length){
-      lines.push('', 'IMPORTANT: Attach the selected portfolio image file(s) to this email before sending:');
-      for(const file of files.files) lines.push(`- ${file.name}`);
-    }
-    lines.push('', 'Sent via varonmagazine.com');
-    const mailto=`mailto:cc@varonmagazine.com?subject=${encodeURIComponent('VÄRON — '+subject+' Application')}&body=${encodeURIComponent(lines.join('\n'))}`;
-    document.getElementById(statusId).textContent='Your email app should open with the application prepared. Please review it, attach any selected portfolio images, and press Send. Your application is not submitted until you send that email.';
-    window.location.href=mailto;
+    button.disabled=true; status.textContent='Submitting your application…';
+    const fields={}; for(const [key,value] of new FormData(form).entries()){ if(typeof value==='string' && value.trim()) fields[key]=value.trim(); }
+    const files=[...form.querySelectorAll('input[type="file"]')].flatMap(input=>[...input.files]);
+    const readFiles=files.map(file=>new Promise((resolve,reject)=>{
+      if(file.size>5*1024*1024){reject(new Error(file.name+' is larger than 5 MB.'));return;}
+      const reader=new FileReader(); reader.onload=()=>resolve({name:file.name,mimeType:file.type||'application/octet-stream',base64:String(reader.result).split(',')[1]}); reader.onerror=()=>reject(new Error('Could not read '+file.name)); reader.readAsDataURL(file);
+    }));
+    Promise.all(readFiles).then(uploads=>{
+      const payload={kind:subject,fields,uploads,source:'varonmagazine.com'};
+      const hiddenForm=document.createElement('form'); hiddenForm.method='POST'; hiddenForm.action=applicationEndpoint; hiddenForm.target=applicationFrame.name; hiddenForm.style.display='none';
+      const input=document.createElement('input'); input.type='hidden'; input.name='payload'; input.value=JSON.stringify(payload); hiddenForm.appendChild(input); document.body.appendChild(hiddenForm);
+      window.addEventListener('message',function handler(event){
+        if(!event.data || event.data.type!=='VARON_APPLICATION_RESULT') return;
+        window.removeEventListener('message',handler); hiddenForm.remove(); button.disabled=false;
+        status.textContent=event.data.ok?'Your application has been received. Thank you for your interest in VÄRON.':'We could not submit your application. Please try again or contact cc@varonmagazine.com.';
+        if(event.data.ok) form.reset();
+      });
+      hiddenForm.submit();
+      setTimeout(()=>{ if(button.disabled){button.disabled=false;status.textContent='Submission is taking longer than expected. Please check your email confirmation before trying again.';} },30000);
+    }).catch(error=>{button.disabled=false;status.textContent=error.message+' Please choose smaller images and try again.';});
   }
-  document.getElementById('modelForm').addEventListener('submit',e=>sendApplicationByEmail(e,'modelStatus','Model'));
-  document.getElementById('creativeForm').addEventListener('submit',e=>sendApplicationByEmail(e,'creativeStatus','Creative Collective'));
+  document.getElementById('modelForm').addEventListener('submit',e=>submitApplication(e,'modelStatus','Model'));
+  document.getElementById('creativeForm').addEventListener('submit',e=>submitApplication(e,'creativeStatus','Creative Collective'));
 
   document.querySelectorAll('.close-panel').forEach(b=>b.addEventListener('click',()=>{setPanel(null);if(location.pathname.toLowerCase().startsWith('/joinvaron'))history.pushState({},'', '/');}));
   if(location.pathname.toLowerCase().replace(/\/$/,'')==='/joinvaron'){setPanel(panels.join);}
