@@ -1,8 +1,11 @@
 const RECIPIENT = 'cc@varonmagazine.com';
 function doPost(e) {
   try {
-    if (!e || !e.parameter || !e.parameter.payload) throw new Error('Missing application payload.');
-    const data = JSON.parse(e.parameter.payload);
+    if (!e) throw new Error('Missing request.');
+    const raw = e.postData && e.postData.contents ? e.postData.contents : '';
+    const payloadText = (e.parameter && e.parameter.payload) || raw;
+    if (!payloadText) throw new Error('Missing application payload.');
+    const data = JSON.parse(payloadText);
     const kind = String(data.kind || 'Application').slice(0, 80);
     const fields = data.fields || {};
     const uploads = Array.isArray(data.uploads) ? data.uploads : [];
