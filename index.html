@@ -26,8 +26,11 @@
 /* Give desktop the full editorial field without changing the mobile treatment */
 @media(min-width:801px){
 .book-copy h2{line-height:1.08}
-.home-slide::before{content:"";position:absolute;inset:-7%;background-image:var(--slide-bg);background-size:cover;background-position:center;filter:blur(22px) brightness(.34) saturate(.75);transform:scale(1.08);opacity:.72;z-index:-1}
-.home-slide img{height:100%;width:auto;max-width:100%;object-fit:contain;position:relative;z-index:1}
+/* Desktop-only: make each carousel photograph a full-bleed landscape canvas.
+   A subtle image opacity softens the photography beneath the VÄRON wordmark.
+   The mobile carousel rules below remain unchanged. */
+.home-slide::before{display:none}
+.home-slide img{height:100%;width:100%;max-width:none;object-fit:cover;object-position:center;opacity:.88;position:relative;z-index:1}
 .home-carousel{z-index:1}.home-hero{z-index:15}.nav{z-index:20}.home-bottom{z-index:20}
 }
 
