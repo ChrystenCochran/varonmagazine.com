@@ -175,7 +175,7 @@
   }
 
   document.getElementById('magazineBtn').addEventListener('click',()=>setPanel(panels.magazine));
-  document.getElementById('joinBtn').addEventListener('click',()=>setPanel(panels.join));
+  document.getElementById('joinBtn').addEventListener('click',()=>{setPanel(panels.join);if(location.pathname!='/JoinVaron/'&&location.pathname!='/JoinVaron'){history.pushState({varonJoin:true},'', '/JoinVaron/');}});
   document.getElementById('bookBtn').addEventListener('click',()=>setPanel(panels.book));
 
   document.querySelectorAll('[data-open-form]').forEach(el=>{
@@ -200,7 +200,9 @@
   document.getElementById('modelForm').addEventListener('submit',e=>applicationNotConfigured(e,'modelStatus'));
   document.getElementById('creativeForm').addEventListener('submit',e=>applicationNotConfigured(e,'creativeStatus'));
 
-  document.querySelectorAll('.close-panel').forEach(b=>b.addEventListener('click',()=>setPanel(null)));
+  document.querySelectorAll('.close-panel').forEach(b=>b.addEventListener('click',()=>{setPanel(null);if(location.pathname.toLowerCase().startsWith('/joinvaron'))history.pushState({},'', '/');}));
+  if(location.pathname.toLowerCase().replace(/\/$/,'')==='/joinvaron'){setPanel(panels.join);}
+  window.addEventListener('popstate',()=>{if(location.pathname.toLowerCase().replace(/\/$/,'')==='/joinvaron')setPanel(panels.join);else setPanel(null);});
 
   document.addEventListener('keydown',e=>{
     if(e.key==='Escape')setPanel(null);
