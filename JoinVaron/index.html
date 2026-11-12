@@ -188,41 +188,31 @@
     el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openForm();}});
   });
   const applicationEndpoint='https://script.google.com/macros/s/AKfycbyIqUSC3BhcopZEKSJju2IkSl4RMc_7A7WtCf4BMcjZQmqizHZx8cXvXh8aLJosz7o4/exec';
-  const applicationFrame=document.createElement('iframe');
-  applicationFrame.name='varonApplicationResponse';
-  applicationFrame.style.display='none';
-  applicationFrame.title='Application submission response';
-  document.body.appendChild(applicationFrame);
-  function submitApplication(e,statusId,subject){
+  async function submitApplication(e,statusId,subject){
     e.preventDefault();
     const form=e.currentTarget, status=document.getElementById(statusId), button=form.querySelector('button[type="submit"]');
     if(!form.reportValidity()) return;
     button.disabled=true; status.textContent='Submitting your application…';
-    const fields={}; for(const [key,value] of new FormData(form).entries()){if(typeof value==='string' && value.trim()) fields[key]=value.trim();}
-    const files=[...form.querySelectorAll('input[type="file"]')].flatMap(input=>[...input.files]);
-    const readFiles=files.map(file=>new Promise((resolve,reject)=>{
-      if(file.size>5*1024*1024){reject(new Error(file.name+' is larger than 5 MB.'));return;}
-      const reader=new FileReader();
-      reader.onload=()=>resolve({name:file.name,mimeType:file.type||'application/octet-stream',base64:String(reader.result).split(',')[1]});
-      reader.onerror=()=>reject(new Error('Could not read '+file.name));
-      reader.readAsDataURL(file);
-    }));
-    Promise.all(readFiles).then(uploads=>{
+    try {
+      const fields={};
+      for(const [key,value] of new FormData(form).entries()){if(typeof value==='string' && value.trim()) fields[key]=value.trim();}
+      const files=[...form.querySelectorAll('input[type="file"]')].flatMap(input=>[...input.files]);
+      const uploads=await Promise.all(files.map(file=>new Promise((resolve,reject)=>{
+        if(file.size>5*1024*1024){reject(new Error(file.name+' is larger than 5 MB.'));return;}
+        const reader=new FileReader();
+        reader.onload=()=>resolve({name:file.name,mimeType:file.type||'application/octet-stream',base64:String(reader.result).split(',')[1]});
+        reader.onerror=()=>reject(new Error('Could not read '+file.name));
+        reader.readAsDataURL(file);
+      })));
       const payload={kind:subject,fields,uploads,source:'varonmagazine.com'};
-      const hiddenForm=document.createElement('form');
-      hiddenForm.method='POST'; hiddenForm.action=applicationEndpoint; hiddenForm.target=applicationFrame.name; hiddenForm.style.display='none';
-      const input=document.createElement('input'); input.type='hidden'; input.name='payload'; input.value=JSON.stringify(payload); hiddenForm.appendChild(input); document.body.appendChild(hiddenForm);
-      let finished=false;
-      const finish=ok=>{
-        if(finished)return; finished=true; window.removeEventListener('message',handler); hiddenForm.remove(); button.disabled=false;
-        status.textContent=ok?'Your application has been received. Thank you for your interest in VÄRON.':'We could not confirm submission. Please contact cc@varonmagazine.com.';
-        if(ok)form.reset();
-      };
-      const handler=event=>{if(event.data && event.data.type==='VARON_APPLICATION_RESULT')finish(!!event.data.ok);};
-      window.addEventListener('message',handler);
-      hiddenForm.submit();
-      setTimeout(()=>{if(!finished)finish(false);},30000);
-    }).catch(error=>{button.disabled=false;status.textContent=error.message+' Please choose smaller images and try again.';});
+      await fetch(applicationEndpoint,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(payload)});
+      status.textContent='Your application has been submitted. Thank you for your interest in VÄRON.';
+      form.reset();
+    } catch(error) {
+      status.textContent=(error.message||'We could not submit your application.')+' Please try again or contact cc@varonmagazine.com.';
+    } finally {
+      button.disabled=false;
+    }
   }
   document.getElementById('modelForm').addEventListener('submit',e=>submitApplication(e,'modelStatus','Model'));
   document.getElementById('creativeForm').addEventListener('submit',e=>submitApplication(e,'creativeStatus','Creative Collective'));
