@@ -40,6 +40,11 @@
 .close{border:0;background:none;color:#fff;font-size:26px;line-height:1}.success{display:none;margin-top:12px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#bbb}.success.show{display:block}
 @media(max-width:800px){.home{height:100svh}.home-slideshow{inset:0}.home-carousel{position:absolute;inset:0;width:100%;z-index:1;border-left:0;background:#050505}.home-carousel .home-slide img{object-fit:cover}.home-hero{position:absolute;inset:0;z-index:10}.home-hero .desktop-overlay{display:none}.home-hero .mobile-overlay{display:block;width:96vw;height:92svh;object-fit:contain}.nav{height:70px;padding:0 16px}.brand{font-size:31px}.links{gap:16px;font-size:10px}.links button{padding:10px 0}.home-bottom{left:16px;right:16px;bottom:18px}.panel-top{height:62px;flex-basis:62px;padding:0 12px}.book-panel{display:block;min-height:auto}.book-copy{border-right:0;border-bottom:1px solid #1b1b1b;padding:15vh 20px 10vh}.book-form-wrap{padding:10vh 20px}.shop-panel{padding:14vh 20px 10vh}.shop-grid{grid-template-columns:1fr;gap:12vh}.form input,.form textarea{font-size:16px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.home-slide{transition:none}.home-slide.active{transform:none}}
+
+/* JOIN VÄRON */
+.join-panel{z-index:120;background:#050505}.join-intro{padding:7vw 6vw 4vw;border-bottom:1px solid #202020}.join-kicker{font-size:9px;letter-spacing:.2em;color:#888;text-transform:uppercase}.join-intro h2{font:400 clamp(58px,9vw,125px)/.9 "Playfair Display",Georgia,serif;margin:18px 0}.join-intro p{max-width:650px;color:#aaa;line-height:1.8;font-size:13px}.join-options{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#222}.join-option{background:#050505;padding:5vw 6vw;min-height:280px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer}.join-option:hover{background:#0c0c0c}.join-option .num{font-size:9px;letter-spacing:.2em;color:#777}.join-option h3{font:400 clamp(34px,5vw,66px)/.95 "Playfair Display",Georgia,serif;margin:30px 0 12px}.join-option p{max-width:420px;color:#999;font-size:12px;line-height:1.7}.join-option button{align-self:flex-start;margin-top:24px;border:1px solid #555;background:none;color:#eee;padding:13px 18px;font-size:9px;letter-spacing:.16em;text-transform:uppercase}.join-form-wrap{display:none;padding:5vw 6vw 8vw;border-top:1px solid #222}.join-form-wrap.active{display:block}.join-form-wrap h3{font:400 clamp(35px,5vw,65px)/.95 "Playfair Display",Georgia,serif;margin:0 0 12px}.join-form-wrap>p{color:#999;font-size:12px;line-height:1.7;max-width:620px}.join-form{max-width:760px;display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;margin-top:28px}.join-form label{display:block;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#888;margin-bottom:8px}.join-form input,.join-form textarea,.join-form select{width:100%;background:#080808;border:1px solid #292929;color:#fff;padding:14px;border-radius:0;outline:none}.join-form input:focus,.join-form textarea:focus,.join-form select:focus{border-color:#aaa}.join-form input[type=file]{font-size:11px}.join-form textarea{min-height:110px;resize:vertical}.join-form .wide{grid-column:1/-1}.join-form button{grid-column:1/-1;background:#f4f1eb;color:#050505;border:0;padding:16px;letter-spacing:.15em;text-transform:uppercase;font-size:9px;cursor:pointer}.join-form button:disabled{opacity:.55;cursor:wait}.join-status{grid-column:1/-1;color:#aaa;font-size:10px;line-height:1.6}.join-note{font-size:9px;color:#777;line-height:1.6;margin-top:16px;max-width:650px}
+@media(max-width:800px){.join-intro{padding:15vh 22px 7vh}.join-options{grid-template-columns:1fr}.join-option{min-height:240px;padding:35px 22px}.join-form-wrap{padding:45px 22px 70px}.join-form{grid-template-columns:1fr}.join-form .wide,.join-form button,.join-status{grid-column:1}}
+
 </style>
 </head>
 <body>
@@ -63,6 +68,7 @@
     <div class="links">
       
       <button type="button" id="magazineBtn">Magazine</button>
+      <button type="button" id="joinBtn">Join VÄRON</button>
       <button type="button" id="bookBtn">Book</button>
     </div>
   </nav>
@@ -95,6 +101,39 @@
   </div>
 </section>
 
+
+<!-- JOIN VÄRON -->
+<section class="panel join-panel" id="joinPanel" aria-hidden="true">
+  <div class="panel-top"><button type="button" class="close-panel">Close</button><span class="title">VÄRON — Join the Collective</span><span></span></div>
+  <div class="panel-body">
+    <div class="join-intro"><div class="join-kicker">An invitation to create</div><h2>JOIN VÄRON.</h2><p>We are building a network of models and independent creatives shaping visual culture. Submit your work and tell us how you would like to be involved. All submissions are reviewed by VÄRON; applying does not guarantee acceptance or a booking.</p></div>
+    <div class="join-options">
+      <div class="join-option" data-open-form="model" role="button" tabindex="0" aria-controls="modelFormWrap"><div><span class="num">01 / TALENT</span><h3>MODEL DATABASE</h3><p>For aspiring and established models interested in editorials, campaigns, and creative productions.</p></div><button type="button">Submit Model Application ↗</button></div>
+      <div class="join-option" data-open-form="creative" role="button" tabindex="0" aria-controls="creativeFormWrap"><div><span class="num">02 / COLLABORATION</span><h3>CREATIVE COLLECTIVE</h3><p>For photographers, videographers, makeup artists, designers, stylists, hairdressers, and other creative professionals.</p></div><button type="button">Request to Collaborate ↗</button></div>
+    </div>
+    <div class="join-form-wrap" id="modelFormWrap"><h3>Model Application</h3><p>Introduce yourself and share a link to your portfolio or work.</p>
+      <form class="join-form" id="modelForm">
+        <div><label for="modelName">Full name *</label><input id="modelName" name="name" autocomplete="name" required></div><div><label for="modelEmail">Email *</label><input id="modelEmail" name="email" type="email" autocomplete="email" required></div>
+        <div><label for="modelPhone">Phone (optional)</label><input id="modelPhone" name="phone" type="tel" autocomplete="tel"></div><div><label for="modelLocation">City / State *</label><input id="modelLocation" name="location" autocomplete="address-level2" required></div>
+        <div><label for="modelHeight">Height</label><input id="modelHeight" name="height" placeholder="e.g. 5 ft 10 in"></div><div><label for="modelSocial">Instagram / Social</label><input id="modelSocial" name="social" placeholder="@yourhandle or link"></div>
+        <div class="wide"><label for="modelPortfolio">Portfolio / Website link *</label><input id="modelPortfolio" name="portfolio" type="url" placeholder="https://" required></div>
+        <div class="wide"><label for="modelImages">Portfolio images (optional)</label><input id="modelImages" name="portfolio_images" type="file" accept="image/jpeg,image/png,image/webp" multiple></div>
+        <div class="wide"><label for="modelExperience">Modeling experience (optional)</label><textarea id="modelExperience" name="experience"></textarea></div>
+        <button type="submit">Submit Model Application</button><div class="join-status" id="modelStatus" aria-live="polite"></div>
+      </form><div class="join-note">Applications are reviewed by VÄRON. Portfolio links and images are used only to assess your submission. Secure submission is being configured; this form will not send or store your information until it is activated.</div>
+    </div>
+    <div class="join-form-wrap" id="creativeFormWrap"><h3>Creative Collective</h3><p>Tell us what you do, what you make, and how you would like to contribute to VÄRON.</p>
+      <form class="join-form" id="creativeForm">
+        <div><label for="creativeName">Full name *</label><input id="creativeName" name="name" autocomplete="name" required></div><div><label for="creativeEmail">Email *</label><input id="creativeEmail" name="email" type="email" autocomplete="email" required></div>
+        <div><label for="creativeLocation">City / State *</label><input id="creativeLocation" name="location" autocomplete="address-level2" required></div><div><label for="creativeRole">Profession / Specialty *</label><select id="creativeRole" name="profession" required><option value="">Select specialty</option><option>Photographer</option><option>Videographer</option><option>Makeup Artist</option><option>Fashion Designer</option><option>Stylist</option><option>Hairdresser</option><option>Creative Director</option><option>Set Designer</option><option>Other Creative</option></select></div>
+        <div><label for="creativeSocial">Instagram / Social</label><input id="creativeSocial" name="social" placeholder="@yourhandle or link"></div><div><label for="creativePortfolio">Portfolio / Website</label><input id="creativePortfolio" name="portfolio" type="url" placeholder="https://"></div>
+        <div class="wide"><label for="creativeIntro">Short introduction *</label><textarea id="creativeIntro" name="introduction" required></textarea></div><div class="wide"><label for="creativeContribution">What would you like to contribute to VÄRON? *</label><textarea id="creativeContribution" name="contribution" required></textarea></div>
+        <button type="submit">Submit Creative Application</button><div class="join-status" id="creativeStatus" aria-live="polite"></div>
+      </form><div class="join-note">Applications are reviewed by VÄRON. A submission does not establish a working relationship or guarantee paid work. Secure submission is being configured; this form will not send or store your information until it is activated.</div>
+    </div>
+  </div>
+</section>
+
 <!-- BOOK -->
 <section class="panel" id="bookPanel" aria-hidden="true">
   <div class="panel-top"><button type="button" class="close-panel">Close</button><span class="title">VÄRON — Book</span><span></span></div>
@@ -123,7 +162,7 @@
 <script src="assets/config.js"></script>
 <script>
 (function(){
-  const panels={magazine:document.getElementById('magazinePanel'),book:document.getElementById('bookPanel')};
+  const panels={magazine:document.getElementById('magazinePanel'),join:document.getElementById('joinPanel'),book:document.getElementById('bookPanel')};
   const body=document.body;
 
   function setPanel(panel){
@@ -133,7 +172,31 @@
   }
 
   document.getElementById('magazineBtn').addEventListener('click',()=>setPanel(panels.magazine));
+  document.getElementById('joinBtn').addEventListener('click',()=>setPanel(panels.join));
   document.getElementById('bookBtn').addEventListener('click',()=>setPanel(panels.book));
+
+  document.querySelectorAll('[data-open-form]').forEach(el=>{
+    const openForm=()=>{
+      document.querySelectorAll('.join-form-wrap').forEach(w=>w.classList.remove('active'));
+      const target=document.getElementById(el.dataset.openForm==='model'?'modelFormWrap':'creativeFormWrap');
+      target.classList.add('active'); target.scrollIntoView({behavior:'smooth',block:'start'});
+    };
+    el.addEventListener('click',openForm);
+    el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openForm();}});
+  });
+  function applicationNotConfigured(e,statusId){
+    e.preventDefault();
+    const status=document.getElementById(statusId);
+    const endpoint=(window.VARON_CONFIG||{}).applicationEndpoint;
+    if(!endpoint||endpoint.includes('REPLACE_')){
+      status.textContent='Thank you for your interest. VÄRON is preparing its secure application portal. Your information has not been sent or stored. Please check back soon.';
+      return;
+    }
+    status.textContent='The application service is configured in the site settings, but this starter page requires its submission handler to be enabled before accepting applications.';
+  }
+  document.getElementById('modelForm').addEventListener('submit',e=>applicationNotConfigured(e,'modelStatus'));
+  document.getElementById('creativeForm').addEventListener('submit',e=>applicationNotConfigured(e,'creativeStatus'));
+
   document.querySelectorAll('.close-panel').forEach(b=>b.addEventListener('click',()=>setPanel(null)));
 
   document.addEventListener('keydown',e=>{
