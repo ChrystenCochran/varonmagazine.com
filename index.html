@@ -115,7 +115,12 @@
       <div class="join-option" data-open-form="creative" role="button" tabindex="0" aria-controls="creativeFormWrap"><div><span class="num">02 / COLLABORATION</span><h3>CREATIVE COLLECTIVE</h3><p>For photographers, videographers, makeup artists, designers, stylists, hairdressers, and other creative professionals.</p></div><button type="button">Request to Collaborate ↗</button></div>
     </div>
     <div class="join-form-wrap" id="modelFormWrap"><h3>Model Application</h3><p>Introduce yourself and share a link to your portfolio or work.</p>
-      <form class="join-form" id="modelForm">
+      <form class="join-form" id="modelForm" action="https://formsubmit.co/cc@varonmagazine.com" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="_subject" value="VÄRON — New Model Application">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_next" value="https://varonmagazine.com/JoinVaron/thanks.html">
+        <input type="hidden" name="_url" value="https://varonmagazine.com/JoinVaron/">
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <div><label for="modelName">Full name *</label><input id="modelName" name="name" autocomplete="name" required></div><div><label for="modelEmail">Email *</label><input id="modelEmail" name="email" type="email" autocomplete="email" required></div>
         <div><label for="modelPhone">Phone (optional)</label><input id="modelPhone" name="phone" type="tel" autocomplete="tel"></div><div><label for="modelLocation">City / State *</label><input id="modelLocation" name="location" autocomplete="address-level2" required></div>
         <div><label for="modelHeight">Height</label><input id="modelHeight" name="height" placeholder="e.g. 5 ft 10 in"></div><div><label for="modelSocial">Instagram / Social</label><input id="modelSocial" name="social" placeholder="@yourhandle or link"></div>
@@ -123,16 +128,21 @@
         <div class="wide"><label for="modelImages">Portfolio images (optional)</label><input id="modelImages" name="portfolio_images" type="file" accept="image/jpeg,image/png,image/webp" multiple></div>
         <div class="wide"><label for="modelExperience">Modeling experience (optional)</label><textarea id="modelExperience" name="experience"></textarea></div>
         <button type="submit">Submit Model Application</button><div class="join-status" id="modelStatus" aria-live="polite"></div>
-      </form><div class="join-note">Applications are reviewed by VÄRON. Portfolio links and images are used only to assess your submission. Secure submission is being configured; this form will not send or store your information until it is activated.</div>
+      </form><div class="join-note">Applications are sent to VÄRON for review. Uploaded images are delivered as email attachments; keep combined uploads under 10 MB.</div>
     </div>
     <div class="join-form-wrap" id="creativeFormWrap"><h3>Creative Collective</h3><p>Tell us what you do, what you make, and how you would like to contribute to VÄRON.</p>
-      <form class="join-form" id="creativeForm">
+      <form class="join-form" id="creativeForm" action="https://formsubmit.co/cc@varonmagazine.com" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="_subject" value="VÄRON — New Creative Collective Application">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_next" value="https://varonmagazine.com/JoinVaron/thanks.html">
+        <input type="hidden" name="_url" value="https://varonmagazine.com/JoinVaron/">
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <div><label for="creativeName">Full name *</label><input id="creativeName" name="name" autocomplete="name" required></div><div><label for="creativeEmail">Email *</label><input id="creativeEmail" name="email" type="email" autocomplete="email" required></div>
         <div><label for="creativeLocation">City / State *</label><input id="creativeLocation" name="location" autocomplete="address-level2" required></div><div><label for="creativeRole">Profession / Specialty *</label><select id="creativeRole" name="profession" required><option value="">Select specialty</option><option>Photographer</option><option>Videographer</option><option>Makeup Artist</option><option>Fashion Designer</option><option>Stylist</option><option>Hairdresser</option><option>Creative Director</option><option>Set Designer</option><option>Other Creative</option></select></div>
         <div><label for="creativeSocial">Instagram / Social</label><input id="creativeSocial" name="social" placeholder="@yourhandle or link"></div><div><label for="creativePortfolio">Portfolio / Website</label><input id="creativePortfolio" name="portfolio" type="url" placeholder="https://"></div>
         <div class="wide"><label for="creativeIntro">Short introduction *</label><textarea id="creativeIntro" name="introduction" required></textarea></div><div class="wide"><label for="creativeContribution">What would you like to contribute to VÄRON? *</label><textarea id="creativeContribution" name="contribution" required></textarea></div>
         <button type="submit">Submit Creative Application</button><div class="join-status" id="creativeStatus" aria-live="polite"></div>
-      </form><div class="join-note">Applications are reviewed by VÄRON. A submission does not establish a working relationship or guarantee paid work. Secure submission is being configured; this form will not send or store your information until it is activated.</div>
+      </form><div class="join-note">Applications are sent to VÄRON for review. A submission does not establish a working relationship or guarantee paid work.</div>
     </div>
   </div>
 </section>
@@ -187,20 +197,7 @@
     el.addEventListener('click',openForm);
     el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openForm();}});
   });
-  function applicationNotConfigured(e,statusId){
-    e.preventDefault();
-    const status=document.getElementById(statusId);
-    const endpoint=(window.VARON_CONFIG||{}).applicationEndpoint;
-    if(!endpoint||endpoint.includes('REPLACE_')){
-      status.textContent='Thank you for your interest. VÄRON is preparing its secure application portal. Your information has not been sent or stored. Please check back soon.';
-      return;
-    }
-    status.textContent='The application service is configured in the site settings, but this starter page requires its submission handler to be enabled before accepting applications.';
-  }
-  document.getElementById('modelForm').addEventListener('submit',e=>applicationNotConfigured(e,'modelStatus'));
-  document.getElementById('creativeForm').addEventListener('submit',e=>applicationNotConfigured(e,'creativeStatus'));
-
-  document.querySelectorAll('.close-panel').forEach(b=>b.addEventListener('click',()=>{setPanel(null);if(location.pathname.toLowerCase().startsWith('/joinvaron'))history.pushState({},'', '/');}));
+document.querySelectorAll('.close-panel').forEach(b=>b.addEventListener('click',()=>{setPanel(null);if(location.pathname.toLowerCase().startsWith('/joinvaron'))history.pushState({},'', '/');}));
   if(location.pathname.toLowerCase().replace(/\/$/,'')==='/joinvaron'){setPanel(panels.join);}
   window.addEventListener('popstate',()=>{if(location.pathname.toLowerCase().replace(/\/$/,'')==='/joinvaron')setPanel(panels.join);else setPanel(null);});
 
